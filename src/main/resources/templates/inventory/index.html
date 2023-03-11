@@ -1,0 +1,98 @@
+<!--
+Name: Wenya Guo
+Assignment: Java 3 Assignment 2
+Program: Computer Programming
+ 
+This project is for creating an application for a cheese factory.
+It adds sessions and authentication to this application. 
+It also implement Junit test for DatabaseAccess and Controller
+
+This page is for the form of adding cheese inventory
+-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	<head>
+	    <meta charset="ISO-8859-1">
+	    <title>Sydney's Cheesey Cheese</title>
+	    <link rel="stylesheet" href="../static/css/main.css" 
+	    th:href="@{/css/main.css}">
+	    <link rel="stylesheet" href="../static/css/forms.css" 
+	    th:href="@{/css/forms.css}">
+	</head>
+	<body>
+	 	
+	 	
+	    <header th:replace="fragments/main :: head1('Add Cheese Inventory')"></header>
+	 
+	    <main>
+	        <nav th:replace="fragments/main.html :: nav('/inventory/new')"></nav>
+	 
+	 
+	        <section>
+	        	
+	        	<!--Form for adding cheese, use the form binding -->
+	        	<form th:action="@{/inventory/addcheese}"method="post"
+	        		th:object="${cheese}">
+					
+					<h3>Add Cheese To Inventory</h3>
+					
+					<p><label for="name">Cheese Name
+					<input id="name" name="cheeseName" th:field="*{name}"
+					type="text" maxlength="255">
+					</label></p>
+					
+					<fieldset>
+						<legend>Amount Received</legend>
+						<div>
+							<label for="qty">Quantity:
+							<input id="qty" name="quantity" 
+								th:field="*{quantity}" type="number" 
+								required min="1" value="0">
+							</label>
+						</div>
+						
+						<div>
+							<label for="weight">Weight:
+							<input id="weight" name="weight" th:field="*{weight}"
+							type="text" required pattern="(\d*\.)?\d+">
+							</label>
+							
+							<!--Dynamic option list -->
+							<label for="units"> Units:
+							<select name="units" id="units" 
+								th:field="*{unitsId}">
+								<option th:each="u : ${session.units}" 
+									value="0" th:value="${u.id}"
+									th:text="${u.description}">cheese units
+								</option> 
+							</select>
+							</label>
+						 </div>
+					</fieldset>
+					
+					<p><label for="price">Price:
+					<input id="price" name="price" th:field="*{price}" 
+					type="text" required pattern="(\d*\.)?\d+">
+					</label></p>
+					
+					<p><label for="url">Spec Sheet URL:
+					<input id="url" name="url" th:field="*{specSheet}" 
+					type="text">
+					</label></p>
+	
+					<p><input type="submit"><input type="reset"></p>
+	
+				</form>  	
+	        </section>
+	    </main>
+	 	
+	 	
+	    <footer th:replace="fragments/main :: 
+	    	foot(${#dates.year(#dates.createNow())})"></footer>
+	 
+	 
+	</body>
+ 
+</html>

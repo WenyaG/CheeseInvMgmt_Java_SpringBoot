@@ -1,0 +1,55 @@
+<!--
+	Name: Wenya Guo
+	Assignment: Java 3 Assignment 4
+	Program: Computer Programming
+	
+	This project is for creating an application for a cheese factory.
+	In assignment4, we added the user registration form, and also moved the
+	database to a persistent storage system using MySQL server. 
+	
+	This page is for displaying login form. Use fragment for header, footer and
+	navigator.
+-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Log In</title>
+	<link rel="stylesheet" href="../static/css/main.css" 
+		    th:href="@{/css/main.css}">
+	<link rel="stylesheet" href="../static/css/forms.css" 
+		    th:href="@{/css/forms.css}">
+</head>
+<body>
+	<header th:replace="fragments/main :: head1('Log In')"></header>
+	
+	<main>
+		<nav th:replace="fragments/main.html :: nav('/login')"></nav>
+		<section>
+			<div th:if="${param.error}" class="error">
+				Invalid username or password
+			</div>
+			<div th:if="${param.logout}" class="msg">
+				You have been signed out</div>
+			
+			<form method="post" th:action="@{/login}">
+				<p><label for="username">User Name:
+					<input type="username" id="username" name="username">
+				</label></p>
+				
+				<p><label for="pass">Password:
+					<input type="password" id="pass" name="password">
+				</label></p>
+				
+				<p><input type="submit" value="Log In" name="login"></p>
+			</form>
+		</section>
+	</main>
+	
+	<footer th:replace="fragments/main :: 
+		foot(${#dates.year(#dates.createNow())})"></footer>
+
+</body>
+</html>

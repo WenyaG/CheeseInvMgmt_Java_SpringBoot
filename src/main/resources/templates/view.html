@@ -1,0 +1,48 @@
+<!--
+	Name: Wenya Guo
+	Assignment: Java 3 Assignment 4
+	Program: Computer Programming
+	
+	This project is for creating an application for a cheese factory.
+	In assignment4, we added the user registration form, and also moved the
+	database to a persistent storage system using MySQL server. 
+	
+	This page is for displaying "view our cheese" list
+-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" media="all"
+		href="../static/css/main.css" th:href="@{/css/main.css}">
+</head>
+<body>
+	
+	
+    <header th:replace="fragments/main :: head1('View Our Cheeses')"></header>
+
+	<main>
+		<nav th:replace="fragments/main.html :: nav('/view')"></nav>
+		
+		<section>
+	        <img src="../static/images/cheese.jpg" 
+	        	th:src="@{/images/cheese.jpg}" 
+	        	alt="wheels of cheese">
+	        <ul>
+	        	<li th:each="c : ${cheeses}" 
+	        	th:text="|${c.name}: ${#numbers.formatDecimal(c.weight, 1, 1)} 
+	        			${session.unitsMap.get(c.unitsId).description}|">
+	        	cheeses</li>
+	        </ul>
+	    </section>    	
+	</main>
+	
+	
+	<footer th:replace="fragments/main :: 
+		foot(${#dates.year(#dates.createNow())})"></footer>
+	
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!--
+	Name: Wenya Guo
+	Assignment: Java 3 Assignment 4
+	Program: Computer Programming
+	
+	This project is for creating an application for a cheese factory.
+	In assignment4, we added the user registration form, and also moved the
+	database to a persistent storage system using MySQL server. 
+	
+	This page is for displaying register form. Use fragment for header, footer and
+	navigator.
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Register a new account</title>
+	<link rel="stylesheet" href="../static/css/main.css" 
+			    th:href="@{/css/main.css}">
+	<link rel="stylesheet" href="../static/css/forms.css" 
+			    th:href="@{/css/forms.css}">
+	<script src="../scripts/validation.js" th:src="@{/scripts/validation.js}">
+	</script>
+</head>
+<body>
+
+	<header th:replace="fragments/main :: head1('Register')"></header>
+	
+	
+	
+	<main>
+		<nav th:replace="fragments/main.html :: nav('/register')"></nav>
+		
+		<section>
+			<form name="form" action="#" th:action="@{/register}" method="post" 
+			th:object="${user}">
+			
+				<input type="hidden" name="userId" th:field="*{userId}">
+				<h3 th:if="${user.userId > 0}">Edit Profile</h3>
+				<h3 th:unless="${user.userId > 0}">Create an Account</h3>
+		    	<p><label for="username">User Name: <input type="text" 
+				name="username" id="username" title="User Name: " required
+				minlength="6" th:field="*{userName}" 
+				th:disabled="${user.userId > 0}"></label>
+				</p>
+				<p><label for="email">Email Address: <input type="email" 
+				name="email" id="email" title="Email Address:" th:field="*{email}"></label>
+				</p>
+				<p><label for="pass">Choose a Password: <input type="password" 
+				name="pass" id="pass" title="Choose a password:" required th:field="*{password}"></label>
+				</p>
+				<p><label for="confirm">Confirm Password: <input type="password" 
+				name="confirm" id="confirm" title="Confirm Password: " required></label>
+				</p>
+				<p><input th:if="${user.userId > 0}" type="submit" 
+					value="Edit"></p>
+				<p><input th:unless="${user.userId > 0}" type="submit" 
+					value="Register"></p>
+			</form>
+		</section>
+	</main>
+	
+	<footer th:replace="fragments/main :: 
+		foot(${#dates.year(#dates.createNow())})"></footer>
+
+</body>
+</html>

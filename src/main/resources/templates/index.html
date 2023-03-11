@@ -1,0 +1,81 @@
+<!--
+Name: Wenya Guo
+Assignment: Java 3 Assignment 3
+Program: Computer Programming
+ 
+This project is for creating an application for a cheese factory.
+It adds sessions and authentication to this application. 
+It also implement Junit test for DatabaseAccess and Controller
+
+Files: /inventory/index.html - the form loading and processing page
+       view.html - list view for all the cheeses
+       /inventory/view.html - table for displaying cheese inventory 
+	   /fragments/main.html - the thymeleaf fragment for header and footer
+	   login.html - login form page
+	   main.css - the main styles for this application
+	   form.css - the styles for the forms
+
+-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Sydney's Cheesey Cheese</title>
+	<link rel="stylesheet" type="text/css" media="all"
+		href="../static/css/main.css" th:href="@{/css/main.css}">
+</head>
+<body>
+ 	
+ 	<!--Use thymeleaf fragment for header-->
+    <header th:replace="fragments/main :: head1('Welcome')">
+    </header>
+    
+    
+    <main>
+        <nav th:replace="fragments/main.html :: nav('/')"></nav>
+        
+        <section>
+	        <img src="../static/images/cheese.jpg" th:src="@{/images/cheese.jpg}" 
+	        	alt="wheels of cheese">
+                
+            <p>We love cheese!  Hard cheese, creamy cheese, semi-firm cheese, 
+            spreadable cheese, cream cheese, 
+            yellow cheese, orange cheese, white cheese, green cheese, blue cheese, 
+            stinky cheese, pretty cheese, goat cheese, cow cheese, sheep 
+            cheese, but definitely not tofu cheese; funky cheese, sweet cheese,
+            sharp cheese, mild cheese, medium cheese, cheese with chunks, 
+            cheese with holes, cheese with toast, cheese with fruit, cheese 
+            with wine, curds, wheels, shreds, tubs, and so much more!</p>
+            
+            
+            <p>Bocconcini mozzarella st. agur blue cheese. Rubber cheese cheese 
+            triangles smelly cheese red leicester pepper jack bavarian bergkase 
+            chalk and cheese mascarpone. Everyone loves airedale roquefort gouda
+             rubber cheese cheese and biscuits mozzarella camembert de 
+            normandie. Danish fontina stilton cream cheese squirty cheese goat 
+            bavarian bergkase fondue cheesy feet. Parmesan taleggio port-salut 
+            boursin queso pepper jack taleggio hard cheese. Smelly cheese 
+            manchego paneer hard cheese gouda blue castello fromage.</p>
+            
+            <p>Mozzarella brie macaroni cheese. Smelly cheese caerphilly 
+            stinking bishop taleggio cheese slices chalk and cheese cheese 
+            strings cream cheese. Emmental red leicester swiss paneer taleggio 
+            cheese slices monterey jack who moved my cheese.Danish fontina st. 
+            agur blue cheese swiss cheese on toast stinking bishop cream cheese 
+            danish fontina ricotta. Edam melted cheese airedale fromage frais 
+            cheesy grinswiss chalk and cheese fromage frais. Croque monsieur 
+            boursin cheese and biscuits brie who moved my cheese fondue 
+            mascarpone airedale. Cut the cheese st. agur blue cheese pecorino 
+            cheese strings pepper jack swiss st. agur blue cheese feta. Who
+            moved my cheese croque monsieur cut the cheese mascarpone.</p>
+        </section>
+    </main>
+ 	
+ 	<!--Use thymeleaf fragment for header-->
+	<footer th:replace="fragments/main :: 
+		foot(${#dates.year(#dates.createNow())})"></footer>
+
+</body>
+</html>

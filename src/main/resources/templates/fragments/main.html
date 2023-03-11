@@ -1,0 +1,70 @@
+<!--
+	Name: Wenya Guo
+	Assignment: Java 3 Assignment 4
+	Program: Computer Programming
+	
+	This project is for creating an application for a cheese factory.
+	In assignment4, we added the user registration form, and also moved the
+	database to a persistent storage system using MySQL server. 
+
+	This is the thymeleaf fragment file for header, footer and navigator
+-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Header and Footer Fragments</title>
+</head>
+<body>
+	
+	<header th:fragment="head1(pageName)">
+        <h1>Sydney's Cheesey Cheese</h1>
+        <h2 th:text=${pageName}>Welcome</h2>
+        <!--The Log In and log out link should be randered according to
+        the authenticated status -->
+        <div th:if="${pageName != 'Log In'}">
+	        <a th:href="@{/login}" href="/login" 
+	        	sec:authorize="not isAuthenticated()">Sign In</a>
+	        <a th:href="@{/edit}" href="/edit" 
+	        	sec:authorize="isAuthenticated()">Edit Profile</a>
+	        <a th:href="@{/logout}" href="/logout" 
+	        	sec:authorize="isAuthenticated()">Sign Out</a>
+        </div>
+    </header>
+    
+    <nav th:fragment="nav(link)">
+    	<!--The navigator fragment contains all the links in the navigation, 
+    	 but should not display the link for the current page  -->
+    	<a th:if="${link != '/'}" th:href="@{'/'}" href="/">Home</a>
+    	<a th:if="${link != '/inventory/new'}" th:href="@{'/inventory/new'}"
+    		href="/inventory/new" sec:authorize="hasRole('MANAGER')">
+        			Add Cheese Inventory</a>
+        <a th:if="${link != '/inventory/view'}" th:href="@{'/inventory/view'}" 
+        	href="/inventory/view" sec:authorize="hasRole('MANAGER')">
+            View Cheese Inventory</a>
+        <!--only display for CUSTOMER role -->
+        <a th:if="${link != '/view'}" th:href="@{'/view'}" 
+        	href="/view" sec:authorize="hasRole('CUSTOMER')">
+        	View Our Cheeses</a> 
+        	
+        <!--only display for person who does not have authentication -->
+        <a th:if="${link != '/register'}" th:href="@{'/register'}" href="/"
+        	sec:authorize="not isAuthenticated()">Create Account</a>	
+        <a href="#">About Us</a>
+    </nav>
+    
+    <footer th:fragment="foot(year)"> 
+    	<!-- use ${#dates.year(#dates.createNow())} in each page to get current 
+    	year -->
+	    <address>&copy; <span th:text="${year}">2020</span> Wenya Guo</address>
+	    <!--If the user logged in, "logged in as [username] will be displayed -->
+	    <div sec:authorize="isAuthenticated()"> 
+	    	Logged in as 
+	    	<span sec:authentication="name"></span>
+	    </div> 
+	</footer>
+	
+
+</body>
+</html>

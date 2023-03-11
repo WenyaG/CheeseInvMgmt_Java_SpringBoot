@@ -1,0 +1,61 @@
+<!--
+Name: Wenya Guo
+Assignment: Java 3 Assignment 3
+Program: Computer Programming
+ 
+This project is for creating an application for a cheese factory.
+It adds sessions and authentication to this application. 
+It also implement Junit test for DatabaseAccess and Controller
+
+This page is for displaying detailed cheese inventory table
+-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>View Cheese Inventory</title>
+	<link rel="stylesheet" type="text/css" media="all"
+		href="../static/css/main.css" th:href="@{/css/main.css}">
+</head>
+<body>
+	
+	
+    <header th:replace="fragments/main :: head1('View Cheese Inventory')">
+    </header>
+    
+	<main>
+		<nav th:replace="fragments/main.html :: nav('/inventory/view')"></nav>
+		
+		<section>
+		<p th:if="${#lists.isEmpty(cheeseInv)}"> No Cheese Inventory!</p>
+		<table th:unless="${#lists.isEmpty(cheeseInv)}">
+			<tr>
+			<th>ID</th><th>Name</th><th>Amount</th><th>Price</th>
+			</tr>
+			<tr th:each="c : ${cheeseInv}">
+				<td th:text="${c.id}">id</td>
+				<td>
+					<a th:unless="${#strings.isEmpty(c.specSheet)}"
+					th:href="@{${c.specSheet}}"
+					th:text="${c.name}">name</a>
+					<span th:if="${#strings.isEmpty(c.specSheet)}" 
+					th:text="${c.name}">
+				</td>
+				<td th:text="|${c.quantity} x ${#numbers.formatDecimal
+						(c.weight, 1, 1)} ${session.unitsMap.get(c.unitsId)
+						.description}|">amount</td>
+				<td	th:text="${#numbers.formatCurrency(c.price)}">price</td>
+			</tr>
+		
+		</table>
+		</section>
+	</main>
+	
+	
+	<footer th:replace="fragments/main :: 
+		foot(${#dates.year(#dates.createNow())})"></footer>
+
+</body>
+</html>
